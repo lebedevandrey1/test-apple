@@ -22,15 +22,18 @@ return [
             'namespace' => 'common\fixtures',
           ],
     ],
-    'components' => [
-        'log' => [
-            'targets' => [
-                [
-                    'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
+    'components' => array_merge(
+        require(__DIR__ . '../../../common/config/dbs.php'),
+        [
+            'log' => [
+                'targets' => [
+                    [
+                        'class' => \yii\log\FileTarget::class,
+                        'levels' => ['error', 'warning'],
+                    ],
                 ],
             ],
-        ],
-    ],
+        ]
+    ),
     'params' => $params,
 ];

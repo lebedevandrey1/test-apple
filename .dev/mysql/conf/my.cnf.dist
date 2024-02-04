@@ -1,0 +1,16 @@
+[mysqld]
+local-infile=0
+wait_timeout = 50
+max_allowed_packet = 1024M
+net_buffer_length = 1024M
+max_connections=400
+max_user_connections=400
+query_cache_type = ON
+query_cache_size = 4096M
+innodb_stats_on_metadata = OFF
+innodb_buffer_pool_size=10G
+slow_query_log = 1
+slow-query_log_file=/var/log/mysql/appdb-slow.log
+long_query_time=5.0
+log_queries_not_using_indexes=1
+log_error=/var/log/mysql/appdb_error.log
