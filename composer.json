@@ -14,12 +14,15 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.4.0",
+        "php": ">=8.1.0",
         "yiisoft/yii2": "~2.0.45",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         "yiithings/yii2-dotenv": "^1.1",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "kartik-v/yii2-grid": "^3.5",
+        "kartik-v/yii2-bootstrap5-dropdown": "^1.0",
+        "kartik-v/yii2-widget-select2": "^2.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
