@@ -37,7 +37,7 @@ finished:
 	echo "Эндпоинты окружения: "; \
 	echo "1. Фронт: http://localhost:20080"; \
 	echo "2. Бэкенд: http://localhost:21080"; \
-	echo "2. БД: http://localhost:22080 : user/password | ${DB_USER}/${DB_PASSWORD}";
+	echo "3. БД: http://localhost:22080 : user/password | ${DB_USER}/${DB_PASSWORD}";
 
 migrate:
 	@echo "Запускаем миграции...\n"

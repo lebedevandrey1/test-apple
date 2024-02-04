@@ -1,60 +1,75 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+# DARS TEST
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+## Технические данные
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+| Окружение      | Версия |
+| --------- | -----|
+| PHP  | 8.1.23 |
+| Сервер     |  Apache/2.4.57 (Debian) |
+| База данных      |    MariaDB 10.11 |
+| Yii Version      |   2.0.49.3 |
+| Yii Template      |   Advanced |
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+## Тестовое задание
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+Описание задания находится в файле TASK.md
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![build](https://github.com/yiisoft/yii2-app-advanced/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-advanced/actions?query=workflow%3Abuild)
+## Копирование настроек окружения
 
-DIRECTORY STRUCTURE
--------------------
+Выполняем настройку проекта с помощью makefile.
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+`$ make start-init`
+
+Настраиваем **.env** и **docker-compose.yml** в корне проекта под свое окружение и далее выполняем:
+
+`$ make up`
+
+`$ make migrate`
+
+Если make не установлен в системе, выполняем следующие команды:
+
+`$ cp .dev/init/.env.dist .env`
+
+`$ cp .dev/init/docker-compose.yml.dist docker-compose.yml`
+
+Настраиваем **.env** и **docker-compose.yml** в корне проекта под свое окружение и далее выполняем:
+
+`$ docker-compose down -v --remove-orphans`
+
+`$ docker-compose up -d`
+
+`$ php init --silent=y --overwrite=All --env=Development`
+
+`$ composer install --prefer-dist --no-interaction`
+
+`$ docker exec -it apple_frontend_1 yii migrate`
+
+
+
+Проект готов. Эндпоинты окружения:
+1. Фронт: http://localhost:20080
+2. Бэкенд: http://localhost:21080
+3. БД: http://localhost:22080 : логин и пароль находятся в файле .env
+4. Пользователь в приложении логин / пароль : admin / admin123
+
+
+## Что было сделано в проекте
++ Установлен новый проект Yii2 Advanced
++ Настроен докер и локальное окружение
++ Настроен доступ в приложение по логину и паролю
++ Задания по ТЗ были выполнены в backend части приложения. Страница в меню - Apples
++ За основу был взят простой CRUD и туда впилены все фичи по ТЗ
++ Была сделана полная настройка репозиториев и скоупов для работы с БД
++ Придерживался принципа, что тестовые задания существуют не столько для выполнения задания, сколько для проверки навыков и знаний. Поэтому много чего добавил, чего ТЗ не требовало
+
+
+## Комментарии
++ Немного не понятно ТЗ. В одной его части написано, что "Когда съедено - удаляется из массива яблок", а в другой "На странице в приложении должны быть отображены все яблоки". В моем приложении все съеденные яблоки скрываются из массива
++ Переменная "статус (на дереве / упало)" на мой взгляд лишняя в БД, т.к. этот статус можно вытащить из колонки "дата падения". Добавил эту переменную в БД, т.к. написано в ТЗ
++ Не делал гибкой настройки кол-ва часов, при котором упавшее яблоко считается испорченным. По ТЗ 5 часов
++ Не совсем согласен с пунктом "Бросить исключение - Съесть нельзя, яблоко на дереве". На мой взгляд это не должно быть исключением, т.к. его необходимо обрабатывать. Здесь более уместна будет именно валидация, т.к. данные о действиях идут через форму. Реализовал ее, хотя выбросить исключение было бы проще для реализации
++ Добавил в таблицу гибкости: каждый string фильтр таблицы принимает множественные значения через запятую. Например: "1, 5" или "название1, название2"
++ Поскольку бизнес-логики в приложении практически нет, не увидел смысла писать тесты. Это сделано для экономии времени, т.к. на любом проекте, даже самом небольшом, тесты must have
++ Если в форме одновременно выбирается сколько процентов яблока надкусить и тут же ставится радио, что яблоко надо съесть - приоритет отдается съедению яблока. Логика простая: сначала вы захотели яблоко надкусить на выбранное кол-во процентов, а потом решили его съесть
++ Съеденные яблоки исчезают из таблицы, т.к. "Когда съедено - удаляется из массива яблок"
++ Буду благодарен обратной связи по тестовому заданию, даже отрицательной
