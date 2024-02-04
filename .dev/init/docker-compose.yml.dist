@@ -22,17 +22,22 @@ services:
       # Mount source-code for development
       - ./:/app
 
-  mysql:
-    image: mysql:5.7
+  db:
+    image: mariadb:10.11
     environment:
-      - MYSQL_ROOT_PASSWORD=verysecret
-      - MYSQL_DATABASE=yii2advanced
-      - MYSQL_USER=yii2advanced
-      - MYSQL_PASSWORD=secret
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+    volumes:
+      - ./.dev/mysql/db:/var/lib/mysql
+      - ./.dev/mysql/logs:/var/log/mysql
+      - ./.dev/mysql/conf:/etc/mysql/conf.d
+      - ./.dev/mysql/mysql-dump:/docker-entrypoint-initdb.d
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-  #pgsql:
-  #  image: postgres:9.5
-  #  environment:
-  #    - POSTGRES_DB=yii2advanced
-  #    - POSTGRES_USER=yii2advanced
-  #    - POSTGRES_PASSWORD=secret
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - 22080:80
+    environment:
+      - PMA_ARBITRARY=1
