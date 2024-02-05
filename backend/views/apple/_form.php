@@ -133,7 +133,7 @@ use yii\widgets\Pjax;
             <?= Html::submitButton('Сохранить', [
                 'class' => 'btn btn-pill btn-success-gradien btn-lg',
                 'data-bs-original-title' => 'btn btn-pill btn-success-gradien',
-                'name' => 'submit',
+                'name' => 'confirm',
                 'value' => true
             ]) ?>
 
